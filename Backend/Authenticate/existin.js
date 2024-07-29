@@ -7,18 +7,21 @@ async function themil(req,res,next){
     const usExist= await UserAuth.findOne({username:username,email:email});
 
     if(!usExist){
-        next();
+        // next();
     }
     else{
         const usNaExis=await UserAuth.findOne({username:username});
+        const usEmExis=await UserAuth.findOne({email:email});
+
         if(usNaExis){
-            res.json({msg:"Username already exist"})
+           return res.json({msg:"Username already exist"})
         }
 
-
-        const usEmExis=await UserAuth.findOne({email:email});
-        if(usEmExis){
-            res.json({msg:"Email already exist"})
+        else if(usEmExis){
+            return res.json({msg:"Email already exist"})
+        }
+        else{
+           return res.json({msg:"Username and Email already exists"})
         }
 
     }
