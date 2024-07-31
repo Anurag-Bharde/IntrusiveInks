@@ -1,17 +1,26 @@
 const express=require("express");
 const { default: themil } = require("./existin");
+const jwt= require("jsonwebtoken");
 const app=express();
+const JWT_SECRET= "TumseMileDilMeUthaDardKarara"
+const zod=require("./inpZodCheck")
+const {UserLoginSchema} = require("../../Database/databe");
+const { error } = require("console");
 
-
+app.use(express.json())
 app.post("/signin",async(req,res)=>{
     const email=req.body.email;
     const password=req.body.password;
     
+    
      
-    const usExist= await UserAuth.findOne({password:password,email:email});
+    const usExist= await UserAuth.findOne({email:email});
 
-    if(usExist){
+    if(usExist){ 
         //navigate to the next screen
+        const token=jwt.sign({userId:userInfo._id}, JWT_SECRET)
+        res.set('Authorization', `Bearer ${token}`);
+        return res.json({msg:"sign-in successful", token})
     }
     else{
         const usNaExis=await UserAuth.findOne({password:password});
@@ -36,6 +45,23 @@ app.post("/signin",async(req,res)=>{
 
 
 app.post("/signup",(req,res)=>{
-    
-    
+    const{username, email, password}=req.body;
+
+    const validINp=zod.UserInfo.safeParse({username,email,password})
+    if(!validINp.success){
+        const errorMsg=validINp.error.errors.map(error=> error.message);
+        return res.status(401).json({msg:"The input provided is not valid",errors: errorMsg});
+    }
+    else{
+        UserLoginSchema.create({
+        Username:username,
+        Password:password,
+        Email:email
+      })
+    }
+    res.json({msg:"User is created"})  
+})
+
+app.listen(3000,()=>{
+    console.log("The app is runing on the port 3000")
 })
