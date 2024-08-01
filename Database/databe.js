@@ -8,6 +8,11 @@ const LoginSchema=new mongoose.Schema({
     Password:String
 })
 
+const Thouts=new mongoose.Schema({
+    INote:String,
+    timePost:Date,
+    postLikes:Number
+})
 const UserLoginSchema=mongoose.model('UserLogin',LoginSchema)
 
 module.exports={
