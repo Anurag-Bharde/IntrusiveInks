@@ -14,7 +14,9 @@ const Thouts=new mongoose.Schema({
     postLikes:Number
 })
 const UserLoginSchema=mongoose.model('UserLogin',LoginSchema)
+const LandingSchema=mongoose.model('LandinPage',Thouts)
 
 module.exports={
-    UserLoginSchema
+    UserLoginSchema,
+    LandingSchema
 }
