@@ -4,22 +4,31 @@ const land=express();
 const moment = require('moment');
 land.use(express.json())
 
-land.get("/Intruser",(req,res)=>{
-
+land.get("/Intruser",async (req,res)=>{
+    try {
+        // Fetch all notes sorted by timePost in descending order
+        const notes = await LandingSchema.find().sort({ timePost: -1 });
+        res.status(200).json(notes);
+    } catch (error) {
+        console.error("Error fetching notes:", error);
+        res.status(500).json({ msg: "Internal server error" });
+    }
 })
 
 land.post("/Intruser",async (req,res)=>{
-    console.log(1)
+    try{
     const {INotes}=req.body;
     const timer=new Date();
     const notepad=await LandingSchema.create({
         INote:INotes,
         timePost:timer
     })
-    console.log(2)
-    res.status(403).json({MSG:"The Thought has been saved"})
+    res.status(201).json({MSG:"The Thought has been saved"})
+} catch (error) {
+    console.error("Error saving thought:", error);
+    res.status(500).json({ msg: "Internal server error" });
+}
 })
-
 
 
 land.listen(3000,()=>{
