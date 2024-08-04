@@ -17,12 +17,12 @@ land.get("/Intruser",async (req,res)=>{
 
 land.post("/Intruser",async (req,res)=>{
     try{
-    const {INotes}=req.body;
-    const timer=new Date();
-    const notepad=await LandingSchema.create({
-        INote:INotes,
-        timePost:timer
-    })
+        const {INotes}=req.body;
+        const timer=new Date();
+        const notepad=await LandingSchema.create({
+            INote:INotes,
+            timePost:timer
+        })
     res.status(201).json({MSG:"The Thought has been saved"})
 } catch (error) {
     console.error("Error saving thought:", error);
@@ -46,3 +46,4 @@ land.listen(3000,()=>{
 // console.log(tr + " ago")
 
 // }
+
