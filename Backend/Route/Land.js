@@ -3,6 +3,9 @@ const { LandingSchema } = require("../../Database/databe");
 const land=express();
 const moment = require('moment');
 land.use(express.json())
+const cors=require('cors')
+
+land.use(cors());
 
 land.get("/Intruser",async (req,res)=>{
     try {
@@ -17,13 +20,14 @@ land.get("/Intruser",async (req,res)=>{
 
 land.post("/Intruser",async (req,res)=>{
     try{
-        const {INotes}=req.body;
+        const {noters}=req.body;
+        // console.log(noters)
         const timer=new Date();
         const notepad=await LandingSchema.create({
-            INote:INotes,
+            INote:noters,
             timePost:timer
         })
-    res.status(201).json({MSG:"The Thought has been saved"})
+    res.status(201).json(notepad)
 } catch (error) {
     console.error("Error saving thought:", error);
     res.status(500).json({ msg: "Internal server error" });

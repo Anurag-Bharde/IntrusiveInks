@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import { Landingpage } from './components/Landingpage';
+import { PostBox } from './components/PostBox';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
     <PostBox setTodos={setTodos} todos={todos}/>
+    <Landingpage todos={todos} />
     </>
   )
 }
