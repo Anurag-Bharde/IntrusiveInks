@@ -1,6 +1,18 @@
+// import { LandingSchema } from "../../../Database/databe"
+import React from "react";
+export function Landingpage({todos,setUpdatedNoteId}){
 
-
-export function Landingpage({todos}){
+    const likenote=(id)=>{
+        
+     fetch(`http://localhost:3000/like/${id}`,{
+         method:"PUT",
+     })
+     .then(res =>res.json())
+     .then(updateNote=>{
+        setUpdatedNoteId(id);
+     })
+     .catch(err=> console.log(err))
+    }
 
     // console.log(todos.INote)
     return (
@@ -9,9 +21,8 @@ export function Landingpage({todos}){
                 <div key={notes._id}>
                 <h2>{notes.INote}</h2>
                 <p> Posted at: {new Date(notes.timePost).toLocaleString()}</p>
-                <button onClick={(notes)=>{
-
-                }}></button>
+                <button onClick={()=>{ likenote(notes._id)
+                }}>Like</button>
                 </div>
             ))}
         </div>

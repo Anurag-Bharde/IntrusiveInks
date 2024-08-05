@@ -11,7 +11,7 @@ const LoginSchema=new mongoose.Schema({
 const Thouts=new mongoose.Schema({
     INote:String,
     timePost:Date,
-    postLikes:Number
+    postLikes:{type:Number, default:0}
 })
 const UserLoginSchema=mongoose.model('UserLogin',LoginSchema)
 const LandingSchema=mongoose.model('LandinPage',Thouts)

@@ -5,8 +5,8 @@ import { Landingpage } from './components/Landingpage';
 import { PostBox } from './components/PostBox';
 
 function App() {
-
   const [todos,setTodos]=useState([]);
+  const[updatedNoteId,setUpdatedNoteId]=useState(null);
 
   useEffect(()=>{
     fetch("http://localhost:3000/Intruser")
@@ -14,11 +14,25 @@ function App() {
     .then(data => setTodos(data))
     .catch(err => console.error(err));
   },[])
-
+  
+  useEffect(()=>{
+    if(updatedNoteId){
+      fetch(`http://localhost:3000/Intruser/${updatedNoteId}`)
+      .then(res=>res.json())
+      .then(updatedNote =>{
+        const updatedTodos=todos.map(note=>
+          note._id === updatedNoteId ? updatedNote: note
+        )
+      setTodos(updatedTodos);
+      setUpdatedNoteId(null);
+      })
+      .catch(err => console.log(err))
+    }
+  },[updatedNoteId,todos])
   return (
     <>
     <PostBox setTodos={setTodos} todos={todos}/>
-    <Landingpage todos={todos} />
+    <Landingpage todos={todos} setUpdatedNoteId={setUpdatedNoteId} />
     </>
   )
 }
