@@ -12,7 +12,8 @@ land.get("/Intruser",async (req,res)=>{
     try {
         // Fetch all notes sorted by timePost in descending order
 
-        const notes = await LandingSchema.find().sort({ timePost: -1 });
+        const notes = await LandingSchema.find().sort({ timePost: -1 });+
+        
         res.status(200).json(notes);
     } catch (error) {
         console.error("Error fetching notes:", error);

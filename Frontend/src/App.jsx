@@ -29,6 +29,8 @@ function App() {
       .catch(err => console.log(err))
     }
   },[updatedNoteId,todos])
+
+  
   return (
     <>
     <PostBox setTodos={setTodos} todos={todos}/>

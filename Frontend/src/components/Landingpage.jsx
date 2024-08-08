@@ -22,7 +22,7 @@ export function Landingpage({todos,setUpdatedNoteId}){
                 <h2>{notes.INote}</h2>
                 <p> Posted at: {new Date(notes.timePost).toLocaleString()}</p>
                 <button onClick={()=>{ likenote(notes._id)
-                }}>Like</button>
+                }}>Like {notes.postLikes}</button>
                 </div>
             ))}
         </div>
