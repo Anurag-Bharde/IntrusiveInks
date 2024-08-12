@@ -28,13 +28,13 @@ function App() {
       })
       .catch(err => console.log(err))
     }
-  },[updatedNoteId,todos])
+  },[updatedNoteId])
 
   
   return (
     <>
     <PostBox setTodos={setTodos} todos={todos}/>
-    <Landingpage todos={todos} setUpdatedNoteId={setUpdatedNoteId} />
+    <Landingpage todos={todos} setTodos={setTodos} setUpdatedNoteId={setUpdatedNoteId} />
     </>
   )
 }

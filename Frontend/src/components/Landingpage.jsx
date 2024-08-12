@@ -1,6 +1,6 @@
 // import { LandingSchema } from "../../../Database/databe"
 import React from "react";
-export function Landingpage({todos,setUpdatedNoteId}){
+export function Landingpage({todos,setTodos,setUpdatedNoteId}){
 
     const likenote=(id)=>{
         
@@ -9,7 +9,9 @@ export function Landingpage({todos,setUpdatedNoteId}){
      })
      .then(res =>res.json())
      .then(updateNote=>{
-        setUpdatedNoteId(id);
+        setTodos(todos.map(note=>
+            note._id === id ? { ...note,postLikes:updateNote.postLikes} :note
+        ))
      })
      .catch(err=> console.log(err))
     }
