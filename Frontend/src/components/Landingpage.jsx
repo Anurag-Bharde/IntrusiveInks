@@ -1,6 +1,7 @@
 // import { LandingSchema } from "../../../Database/databe"
 import React from "react";
 import {formatDistance} from "date-fns"
+import { EditDialog } from "./EditDialog";
 export function Landingpage({todos,setTodos,setUpdatedNoteId}){
 
     const likenote=(id)=>{
@@ -26,6 +27,7 @@ export function Landingpage({todos,setTodos,setUpdatedNoteId}){
                 <button onClick={()=>{ likenote(notes._id)
                 }}>Like {notes.postLikes}</button>
                 <p>{formatDistance(new Date(),notes.timePost)} ago</p>
+                <EditDialog noteId={notes._id}/>
                 </div>
             ))}
         </div>

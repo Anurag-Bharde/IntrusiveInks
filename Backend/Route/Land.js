@@ -24,6 +24,9 @@ land.get("/Intruser",async (req,res)=>{
 land.post("/Intruser",async (req,res)=>{
     try{
         const {noters}=req.body;
+        if({noters}=="" || {noters}==null || {noters}==undefined){
+            return res.status(500).json({msg:"no msg was sent"})
+        }
         // console.log(noters)
         const timer=new Date();
         const notepad=await LandingSchema.create({
