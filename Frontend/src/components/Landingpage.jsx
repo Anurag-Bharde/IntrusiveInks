@@ -1,5 +1,6 @@
 // import { LandingSchema } from "../../../Database/databe"
 import React from "react";
+import {formatDistance} from "date-fns"
 export function Landingpage({todos,setTodos,setUpdatedNoteId}){
 
     const likenote=(id)=>{
@@ -22,9 +23,9 @@ export function Landingpage({todos,setTodos,setUpdatedNoteId}){
             {todos.map(notes=>(
                 <div key={notes._id}>
                 <h2>{notes.INote}</h2>
-                <p> Posted at: {new Date(notes.timePost).toLocaleString()}</p>
                 <button onClick={()=>{ likenote(notes._id)
                 }}>Like {notes.postLikes}</button>
+                <p>{formatDistance(new Date(),notes.timePost)} ago</p>
                 </div>
             ))}
         </div>

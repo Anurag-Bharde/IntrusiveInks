@@ -15,20 +15,29 @@ function App() {
     .catch(err => console.error(err));
   },[])
   
-  useEffect(()=>{
-    if(updatedNoteId){
+  useEffect(() => {
+    if (updatedNoteId) {
       fetch(`http://localhost:3000/Intruser/${updatedNoteId}`)
-      .then(res=>res.json())
-      .then(updatedNote =>{
-        const updatedTodos=todos.map(note=>
-          note._id === updatedNoteId ? updatedNote: note
-        )
-      setTodos(updatedTodos);
-      setUpdatedNoteId(null);
-      })
-      .catch(err => console.log(err))
+        .then(res => res.json())
+        .then(updatedNote => {
+          // Find the index of the note that was updated
+          const index = todos.findIndex(note => note._id === updatedNoteId);
+  
+          if (index !== -1) {
+            // Create a new array with the updated note
+            const updatedTodos = [
+              ...todos.slice(0, index), 
+              updatedNote, 
+              ...todos.slice(index + 1)
+            ];
+            setTodos(updatedTodos); // Update the state with the new array
+          }
+          setUpdatedNoteId(null); // Reset the updatedNoteId after updating
+        })
+        .catch(err => console.error(err));
     }
-  },[updatedNoteId])
+  }, [updatedNoteId]); // Only trigger when updatedNoteId changes
+  
 
   
   return (
