@@ -1,66 +1,30 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+export default function FormDialog(){
+  return (<>
+    <AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <Button color="red">Revoke access</Button>
+  </AlertDialog.Trigger>
+  <AlertDialog.Content maxWidth="450px">
+    <AlertDialog.Title>Revoke access</AlertDialog.Title>
+    <AlertDialog.Description size="2">
+      Are you sure? This application will no longer be accessible and any
+      existing sessions will be expired.
+    </AlertDialog.Description>
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Edit Already
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
-        }}
-      >
-      {/* Use radix Ui here ther is no use of it */}
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            What do you have in Mind
-          </DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Nahh!!!!</Button>
-          <Button type="submit">Thought Changed?</Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
+    <Flex gap="3" mt="4" justify="end">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray">
+          Cancel
+        </Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button variant="solid" color="red">
+          Revoke access
+        </Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+</>
+  )
 }

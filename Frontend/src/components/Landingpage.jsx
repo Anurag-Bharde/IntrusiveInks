@@ -1,8 +1,7 @@
 // import { LandingSchema } from "../../../Database/databe"
-import React from "react";
+import React, { Component } from "react";
 import {formatDistance} from "date-fns"
-import { EditDialog } from "./EditDialog";
-import FormDialog from "./FormDialog";
+import {Dialog} from '@radix-ui/themes'
 export function Landingpage({todos,setTodos,setUpdatedNoteId}){
 
     const likenote=(id)=>{
@@ -28,7 +27,31 @@ export function Landingpage({todos,setTodos,setUpdatedNoteId}){
                 <button onClick={()=>{ likenote(notes._id)
                 }}>Like {notes.postLikes}</button>
                 <p>{formatDistance(new Date(),notes.timePost)} ago</p>
-                <FormDialog />
+                <>
+                <Dialog.Root>
+                    <Dialog.Trigger>
+                        <Button>Edit Profile</Button>
+                    </Dialog.Trigger>
+
+                    <Dialog.Content maxWidth="450px">
+                        <Dialog.Title>Edit my thought</Dialog.Title>
+                        <Dialog.Description size="2" mb="4">
+                            Make changes to your thoughts.
+                        </Dialog.Description>
+
+                        <Flex direction="column" gap= "3">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    Your Thought
+                                </Text>
+                                <TextField.Root 
+                                defaultValue={notes.INote} />
+                            </label>
+                        </Flex>
+                    </Dialog.Content>
+                </Dialog.Root>
+                </>
+                
                 </div>
             ))}
         </div>
