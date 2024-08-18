@@ -94,8 +94,9 @@ land.delete("/Intrusive/:id",async(req,res)=>{
         const idm=req.params.id;
         if(!idm || idm==="undefined")return res.status(400).json({ msg: "Invalid ID it is" });
         
-        const note=await LandingSchema.deleteOne(idm);
-        await note.save();
+        const dated=await LandingSchema.findById(idm)
+        const note=await LandingSchema.deleteOne(dated);
+       
         res.status(200).json(note)
     }
     catch(error){

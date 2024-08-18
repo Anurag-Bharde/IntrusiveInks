@@ -80,7 +80,7 @@ export function Landingpage({todos,setTodos,setUpdatedNoteId}){
           </button>
           <p>{formatDistance(new Date(), notes.timePost)} ago</p>
           <Button onClick={()=>Changer(notes._id)}>Edit</Button>
-          <Button onCLick={()=>Deleter(notes._id)}>Delete</Button>
+          <Button onClick={()=>Deleter(notes._id)}>Delete</Button>
         </div>
       ))}
     </div>
