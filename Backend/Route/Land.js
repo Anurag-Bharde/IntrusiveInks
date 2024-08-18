@@ -40,6 +40,33 @@ land.post("/Intruser",async (req,res)=>{
 }
 })
 
+land.get("/Intruser/:id",async(req,res)=>{
+    const idd=req.params.id;
+    const note =await LandingSchema.findById(idd);
+    res.json(note);
+})
+land.put("/Intrusive/:id",async(req,res)=>{
+
+  try{const idm=req.params.id;
+    if(!idm||idm=="undefined"){
+        return res.status(401).json({msg:"Invalid ID"});
+    }
+ const note=await LandingSchema.findById(idm);
+ if(!note){
+     return res.status(404).json({msg:"Note note found"})
+    }
+    note.INote=req.body.INote
+    await note.save();
+    res.status(200).json({Msg:"The note updated successfully"})
+}
+catch(error){
+    console.log(error)
+
+return res.status(404).json({msg:"Some error occured while editing the Note"})
+}
+
+})
+
 land.put("/like/:id",async(req,res)=>{
     try{
     const ider=req.params.id;
@@ -60,6 +87,23 @@ land.put("/like/:id",async(req,res)=>{
     return res.status(500).json({msg:"Internal server error"})
 }
 })
+
+
+land.delete("/Intrusive/:id",async(req,res)=>{
+    try{
+        const idm=req.params.id;
+        if(!idm || idm==="undefined")return res.status(400).json({ msg: "Invalid ID it is" });
+        
+        const note=await LandingSchema.deleteOne(idm);
+        await note.save();
+        res.status(200).json(note)
+    }
+    catch(error){
+   console.log(error);
+   res.status(404).json({msg:"Some error while deleting"})
+    }
+})
+
 land.listen(3000,()=>{
     console.log("The app is running on the port 3000")
 })

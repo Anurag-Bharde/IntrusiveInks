@@ -1,8 +1,13 @@
 // import { LandingSchema } from "../../../Database/databe"
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import {formatDistance} from "date-fns"
 import {Dialog} from '@radix-ui/themes'
+import { Button,TextField,Flex } from "@radix-ui/themes";
+import { useState } from "react";
+
 export function Landingpage({todos,setTodos,setUpdatedNoteId}){
+
+    const [editNote,setEditedNote]=useState("")
 
     const likenote=(id)=>{
         
@@ -18,42 +23,66 @@ export function Landingpage({todos,setTodos,setUpdatedNoteId}){
      .catch(err=> console.log(err))
     }
 
+    // const editedNote=(id) =>{
+    //     fetch(`http://localhost:3000/Intruser/${id}`,
+    //     {method:"PUT",
+    //     headers:{"Content-Type":"application/json"},
+    //     body:JSON.stringify({INote:editNote})
+    // })
+    // .then(res=>res.json())
+    // .then(updatedNote=>{
+    //     setTodos(todos.map(note =>
+    //         note._id === id ? updatedNote:note
+    //     ))
+    // })
+    // .catch(err=>console.error(err))
+    // }
+
+    function Changer(id){
+
+       const message =prompt("Please enter your New Note");
+       if(message && message.trim() !== ""){
+       setEditedNote(message);
+        fetch(`http://localhost:3000/Intrusive/${id}`,{
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({INote:message})
+        })
+        .then(res=>res.json())
+        .then(updatedNote=>{
+            setUpdatedNoteId(id);
+        })
+    }
+
+    }
+
+    function Deleter(id){
+      fetch(`http://localhost:3000/intrusive/${id}`,{
+        method:"DELETE",
+        headers:{"Content-Type":"application/json"}
+      })
+      .then(res=>res.json())
+      .then(updatedNote=>{
+        setUpdatedNoteId(id);
+      })
+    }
+         
+    
+
     // console.log(todos.INote)
     return (
         <div>
-            {todos.map(notes=>(
-                <div key={notes._id}>
-                <h2>{notes.INote}</h2>
-                <button onClick={()=>{ likenote(notes._id)
-                }}>Like {notes.postLikes}</button>
-                <p>{formatDistance(new Date(),notes.timePost)} ago</p>
-                <>
-                <Dialog.Root>
-                    <Dialog.Trigger>
-                        <Button>Edit Profile</Button>
-                    </Dialog.Trigger>
-
-                    <Dialog.Content maxWidth="450px">
-                        <Dialog.Title>Edit my thought</Dialog.Title>
-                        <Dialog.Description size="2" mb="4">
-                            Make changes to your thoughts.
-                        </Dialog.Description>
-
-                        <Flex direction="column" gap= "3">
-                            <label>
-                                <Text as="div" size="2" mb="1" weight="bold">
-                                    Your Thought
-                                </Text>
-                                <TextField.Root 
-                                defaultValue={notes.INote} />
-                            </label>
-                        </Flex>
-                    </Dialog.Content>
-                </Dialog.Root>
-                </>
-                
-                </div>
-            ))}
+      {todos.map(notes => (
+        <div key={notes._id}>
+          <h2>{notes.INote}</h2>
+          <button onClick={() => likenote(notes._id)}>
+            Like {notes.postLikes}
+          </button>
+          <p>{formatDistance(new Date(), notes.timePost)} ago</p>
+          <Button onClick={()=>Changer(notes._id)}>Edit</Button>
+          <Button onCLick={()=>Deleter(notes._id)}>Delete</Button>
         </div>
+      ))}
+    </div>
     )
 }
